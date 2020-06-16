@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@capacitor/core": "2.2.0",
+    "@ionic-enterprise/auth": "~3.0.0",
+    "@ionic-enterprise/identity-vault": "~4.2.2",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
     "@testing-library/jest-dom": "^4.2.4",
@@ -32,6 +34,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -45,7 +52,10 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.2.0"
+    "@capacitor/cli": "2.2.0",
+    "husky": "~4.2.5",
+    "prettier": "~2.0.5",
+    "pretty-quick": "~2.0.1"
   },
   "description": "An Ionic project"
 }
