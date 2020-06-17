@@ -1,9 +1,11 @@
 export default interface AuthState {
   isAuthenticated: boolean;
-  error: string | undefined;
+  error: any | undefined;
+  loading: boolean;
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
-  error: undefined
+  error: undefined,
+  loading: false
 };

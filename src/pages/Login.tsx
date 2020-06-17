@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonTitle, IonContent, IonButton, IonToolbar } from 
 import { useAuth } from '../hooks/useAuth';
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const { login, loading } = useAuth();
 
   const handleLogin = () => login();
 
@@ -15,7 +15,7 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonButton expand="full" color="tertiary" onClick={handleLogin}>
+        <IonButton expand="full" color="tertiary" onClick={handleLogin} disabled={loading}>
           Sign In
         </IonButton>
       </IonContent>
