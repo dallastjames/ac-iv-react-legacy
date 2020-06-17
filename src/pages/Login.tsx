@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { IonPage, IonHeader, IonTitle, IonContent, IonButton, IonToolbar } from '@ionic/react';
-import { lockOpen } from 'ionicons/icons';
-import { AuthContext } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 const Login: React.FC = () => {
-  const { dispatch } = useContext(AuthContext);
+  const { login } = useAuth();
 
-  const handleLogin = () => dispatch({ type: 'LOGIN' });
+  const handleLogin = () => login();
 
   return (
     <IonPage>

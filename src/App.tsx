@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { AuthProvider, AuthContext } from './contexts/AuthContext';
+import { AuthProvider, AuthContext } from './middleware/contexts/AuthContext';
 import Tabs from './components/Tabs';
 
 /* Core CSS required for Ionic components to work properly */
@@ -25,7 +25,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import Login from './pages/Login';
 
-const AppComponent: React.FC = () => {
+const App: React.FC = () => {
   const {
     state: { isAuthenticated }
   } = useContext(AuthContext);
@@ -43,10 +43,10 @@ const AppComponent: React.FC = () => {
   );
 };
 
-const App: React.FC = () => (
+const StateWrapper: React.FC = () => (
   <AuthProvider>
-    <AppComponent />
+    <App />
   </AuthProvider>
 );
 
-export default App;
+export default StateWrapper;
