@@ -1,23 +1,23 @@
 import React from 'react';
-import { IonPage, IonHeader, IonTitle, IonContent, IonButton, IonToolbar } from '@ionic/react';
+import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 import { useAuth } from '../hooks/useAuth';
+import './Login.scss';
+import { cafe } from 'ionicons/icons';
 
 const Login: React.FC = () => {
   const { login, loading } = useAuth();
 
-  const handleLogin = () => login();
-
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Login</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonButton expand="full" color="tertiary" onClick={handleLogin} disabled={loading}>
-          Sign In
-        </IonButton>
+    <IonPage className="login">
+      <IonContent slot="fixed">
+        <div className="login-module">
+          <div className="login-module-inner">
+            <IonIcon icon={cafe} color="light" />
+            <IonButton onClick={login} disabled={loading} expand="block">
+              Sign In
+            </IonButton>
+          </div>
+        </div>
       </IonContent>
     </IonPage>
   );
