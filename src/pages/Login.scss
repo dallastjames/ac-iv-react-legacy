@@ -1,6 +1,6 @@
 .login {
   ion-content {
-    --background: #212122;
+    --background: #ffffff;
   }
 
   &-module {
@@ -14,10 +14,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #212122 url('../assets/login-background.jpg') no-repeat center;
+      background: #ffffff url('../assets/login-background.jpg') no-repeat center;
       background-size: cover;
-      filter: blur(12px) grayscale(90%);
-      -webkit-filter: blur(12px) grayscale(40%);
+      filter: blur(8px) grayscale(50%);
+      -webkit-filter: blur(8px) grayscale(50%);
+      opacity: 0.5;
     }
 
     &-inner {
@@ -37,6 +38,21 @@
       ion-button {
         width: 100%;
       }
+    }
+
+    &-logo {
+      display: flex;
+      width: 120px;
+      height: 120px;
+      background-color: var(--ion-color-secondary);
+      border-radius: 144px;
+      margin-bottom: 3em;
+      img {
+        height: 96px;
+        width: 96px;
+      }
+      align-items: center;
+      justify-content: center;
     }
   }
 }

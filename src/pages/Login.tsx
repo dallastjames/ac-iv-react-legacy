@@ -2,7 +2,7 @@ import React from 'react';
 import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 import { useAuth } from '../hooks/useAuth';
 import './Login.scss';
-import { cafe } from 'ionicons/icons';
+import teacup from '../assets/teacup.svg';
 
 const Login: React.FC = () => {
   const { login, loading } = useAuth();
@@ -12,7 +12,9 @@ const Login: React.FC = () => {
       <IonContent slot="fixed">
         <div className="login-module">
           <div className="login-module-inner">
-            <IonIcon icon={cafe} color="light" />
+            <div className="login-module-logo">
+              <img src={teacup} alt="tea cup" />
+            </div>
             <IonButton onClick={login} disabled={loading} expand="block">
               Sign In
             </IonButton>
