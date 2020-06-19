@@ -6,7 +6,7 @@ export const reducer = (state: AuthState = initialState, action: AuthAction) => 
     case 'LOGIN':
       return { ...state, loading: true };
     case 'LOGIN_SUCCESS':
-      return { ...state, isAuthenticated: true, loading: false };
+      return { ...state, isAuthenticated: true, loading: false, user: action.user };
     case 'LOGIN_FAILURE':
       return { ...state, error: action.error, loading: false };
     case 'LOGOUT':

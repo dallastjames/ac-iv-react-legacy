@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../middleware/contexts/AuthContext';
 import AuthSingleton from '../services/Authentication';
+import { User } from '../models/User';
 
 export const useAuth = () => {
   const { state, dispatch } = useContext(AuthContext);
@@ -16,7 +17,7 @@ export const useAuth = () => {
       ///DEBUG
       await new Promise((res) => setTimeout(res, 1000));
       ///DEBUG
-      dispatch({ type: 'LOGIN_SUCCESS' });
+      dispatch({ type: 'LOGIN_SUCCESS', user: { email: '' } });
     }
   };
 
@@ -28,8 +29,11 @@ export const useAuth = () => {
     dispatch({ type: 'LOGIN' });
 
     try {
+      authentication.onLoginSuccessCallback = (user: User) => {
+        console.log('App: Logged In Callback', user);
+        dispatch({ type: 'LOGIN_SUCCESS', user });
+      };
       await authentication.login();
-      dispatch({ type: 'LOGIN_SUCCESS' });
     } catch (error) {
       dispatch({ type: 'LOGIN_FAILURE', error });
     }

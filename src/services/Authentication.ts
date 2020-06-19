@@ -1,5 +1,6 @@
 import { isPlatform } from '@ionic/react';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
+import { User } from '../models/User';
 
 const options: IonicAuthOptions = {
   authConfig: 'azure',
@@ -15,14 +16,14 @@ const options: IonicAuthOptions = {
     : process.env.REACT_APP_AUTH_WEB_LOGOUT_URL!,
   platform: isPlatform('capacitor') ? 'capacitor' : 'web',
   iosWebView: 'private',
-  logLevel: 'DEBUG'
+  logLevel: 'DEBUG',
   // Sets the color of the toolbar at the top of the login webview for Android.
   // Red is used to call attention to the functionality, you will most likely want to use another color.
-  //androidToolbarColor: 'Red'
+  androidToolbarColor: 'Red'
 };
 
-class Authentication extends IonicAuth {
-  onLoginSuccessCallback: () => void = () => {};
+class Authentication extends IonicAuth<User> {
+  onLoginSuccessCallback: (user: User) => void = () => {};
   onLogoutCallback: () => void = () => {};
 
   constructor() {
@@ -31,12 +32,20 @@ class Authentication extends IonicAuth {
   }
 
   async onLoginSuccess(): Promise<void> {
-    console.log('App: Logged in');
-    this.onLoginSuccessCallback();
+    const user = this.unpackIdToken(await this.getIdToken());
+    this.onLoginSuccessCallback(user);
   }
 
   async onLogout(): Promise<void> {
     this.onLogoutCallback();
+  }
+
+  private unpackIdToken(token: any): User {
+    return {
+      firstName: token['given_name'] || '',
+      lastName: token['family_name'] || '',
+      email: token['emails'][0]
+    };
   }
 }
 

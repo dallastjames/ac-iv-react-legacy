@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
+import { IonPage, IonContent, IonButton } from '@ionic/react';
 import { useAuth } from '../hooks/useAuth';
 import './Login.scss';
 import teacup from '../assets/teacup.svg';
