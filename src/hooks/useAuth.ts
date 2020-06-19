@@ -13,10 +13,8 @@ export const useAuth = () => {
 
   const checkAuthentication = async () => {
     const isUserAuthenticated = await authentication.isAuthenticated();
+    console.log('YO', isUserAuthenticated);
     if (isUserAuthenticated) {
-      ///DEBUG
-      await new Promise((res) => setTimeout(res, 1000));
-      ///DEBUG
       dispatch({ type: 'LOGIN_SUCCESS', user: { email: '' } });
     }
   };
@@ -30,7 +28,6 @@ export const useAuth = () => {
 
     try {
       authentication.onLoginSuccessCallback = (user: User) => {
-        console.log('App: Logged In Callback', user);
         dispatch({ type: 'LOGIN_SUCCESS', user });
       };
       await authentication.login();
@@ -41,7 +38,6 @@ export const useAuth = () => {
 
   const logout = async (): Promise<void> => {
     authentication.onLogoutCallback = () => {
-      console.log('App: Logged out Callback');
       dispatch({ type: 'LOGOUT' });
     };
     await authentication.logout();
