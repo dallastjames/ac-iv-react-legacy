@@ -14,9 +14,7 @@ import { logOut } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
 
 const Home: React.FC = () => {
-  const { logout } = useAuth();
-
-  const handleLogout = () => logout();
+  const { logout, user } = useAuth();
 
   return (
     <IonPage>
@@ -24,13 +22,16 @@ const Home: React.FC = () => {
         <IonToolbar color="primary">
           <IonTitle>Home</IonTitle>
           <IonButtons slot="primary">
-            <IonButton slot="icon-only" onClick={handleLogout}>
+            <IonButton slot="icon-only" onClick={logout}>
               <IonIcon icon={logOut} />
             </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <h2>
+          Hello, {user?.firstName} {user?.lastName}!
+        </h2>
         <IonList></IonList>
       </IonContent>
     </IonPage>

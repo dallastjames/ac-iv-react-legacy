@@ -11,18 +11,6 @@ export const useAuth = () => {
     throw new Error('useAuth must be used with an AuthProvider');
   }
 
-  const checkAuthentication = async () => {
-    const isUserAuthenticated = await authentication.isAuthenticated();
-    console.log('YO', isUserAuthenticated);
-    if (isUserAuthenticated) {
-      dispatch({ type: 'LOGIN_SUCCESS', user: { email: '' } });
-    }
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
   const login = async (): Promise<void> => {
     dispatch({ type: 'LOGIN' });
 
@@ -37,9 +25,7 @@ export const useAuth = () => {
   };
 
   const logout = async (): Promise<void> => {
-    authentication.onLogoutCallback = () => {
-      dispatch({ type: 'LOGOUT' });
-    };
+    dispatch({ type: 'LOGOUT' });
     await authentication.logout();
   };
 
@@ -47,6 +33,7 @@ export const useAuth = () => {
     isAuthenticated: state.isAuthenticated,
     error: state.error,
     loading: state.loading,
+    user: state.user,
     login,
     logout
   };

@@ -37,12 +37,7 @@ const Settings: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-text-center">
-        <IonHeader collapse="condense">
-          <IonToolbar color="primary">
-            <IonTitle size="large">Settings</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+      <IonContent>
         <IonList>
           <IonItem>
             <IonLabel>Biometrics ()</IonLabel>
@@ -61,14 +56,6 @@ const Settings: React.FC = () => {
             <IonButton>
               <IonIcon icon={lockClosed} />
             </IonButton>
-          </IonItem>
-          <IonItem>
-            <IonLabel className="settings-description">
-              <strong>Note:</strong> This app will allow the user to set Biometrics and an Application passcode at the
-              same time. This makes sense if not also using system PIN fallback, which this app is by default. It is
-              just written this way to show how both would work together if you build the application with that option
-              set to false.
-            </IonLabel>
           </IonItem>
         </IonList>
       </IonContent>

@@ -28,7 +28,6 @@ class Authentication extends IonicAuth<User> {
 
   constructor() {
     super(options);
-    console.log(options);
   }
 
   async onLoginSuccess(): Promise<void> {
@@ -38,6 +37,11 @@ class Authentication extends IonicAuth<User> {
 
   async onLogout(): Promise<void> {
     this.onLogoutCallback();
+  }
+
+  async getCurrentUser(): Promise<User> {
+    const idTokenInfo = await this.getIdToken();
+    return this.unpackIdToken(idTokenInfo);
   }
 
   private unpackIdToken(token: any): User {
