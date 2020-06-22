@@ -9,7 +9,7 @@ import { User } from '../models/User';
 import { isPlatform } from '@ionic/react';
 import BrowserPlugin from './BrowserPlugin';
 
-export class VaultService extends IonicIdentityVaultUser<User> {
+class Vault extends IonicIdentityVaultUser<User> {
   constructor() {
     super(
       { ready: () => Promise.resolve() },
@@ -47,9 +47,26 @@ export class VaultService extends IonicIdentityVaultUser<User> {
     return this.setAuthMode(mode);
   }
 
+  onVaultLocked() {
+    console.log('App: Vault::onVaultLocked');
+  }
+
+  onVaultUnlocked() {
+    console.log('App: Vault::onVaultUnlocked');
+  }
+
   ///TODO: Comment that this determines which plugin to use depending on platform.
   getPlugin(): IonicNativeAuthPlugin {
     if (isPlatform('capacitor')) return super.getPlugin();
     return BrowserPlugin;
+  }
+}
+
+export default class VaultSingleton {
+  private static instance: Vault | undefined = undefined;
+
+  static getInstance(): Vault {
+    if (this.instance === undefined) this.instance = new Vault();
+    return this.instance;
   }
 }

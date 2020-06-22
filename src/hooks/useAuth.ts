@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../middleware/contexts/AuthContext';
 import AuthSingleton from '../services/Authentication';
 import { User } from '../models/User';

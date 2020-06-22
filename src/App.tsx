@@ -28,7 +28,7 @@ const App: React.FC = () => {
         <IonRouterOutlet>
           <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
           <Route path="/tabs" render={() => (isAuthenticated ? <Tabs /> : <Redirect to="/login" />)} />
-          <Route path="/login" render={() => (isAuthenticated ? <Redirect to="/tabs/home" /> : <Login />)} />
+          <Route path="/login" render={() => (isAuthenticated ? <Redirect to="/tabs/about" /> : <Login />)} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

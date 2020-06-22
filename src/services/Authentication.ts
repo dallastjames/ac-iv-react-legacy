@@ -1,6 +1,7 @@
 import { isPlatform } from '@ionic/react';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
 import { User } from '../models/User';
+import VaultSingleton from './Vault';
 
 const options: IonicAuthOptions = {
   authConfig: 'azure',
@@ -19,7 +20,9 @@ const options: IonicAuthOptions = {
   logLevel: 'DEBUG',
   // Sets the color of the toolbar at the top of the login webview for Android.
   // Red is used to call attention to the functionality, you will most likely want to use another color.
-  androidToolbarColor: 'Red'
+  androidToolbarColor: 'Red',
+  // Sets Identity Vault as the storage provider for our Authentication tokens.
+  tokenStorageProvider: VaultSingleton.getInstance()
 };
 
 class Authentication extends IonicAuth<User> {
@@ -46,6 +49,7 @@ class Authentication extends IonicAuth<User> {
 
   private unpackIdToken(token: any): User {
     return {
+      id: token['sub'],
       firstName: token['given_name'] || '',
       lastName: token['family_name'] || '',
       email: token['emails'][0]
