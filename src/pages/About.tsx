@@ -13,14 +13,27 @@ import {
   IonItem,
   IonNote
 } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { logOut } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
+import { useVault } from '../hooks/useVault';
+
 import './About.scss';
 
 const About: React.FC = () => {
   const { logout, user } = useAuth();
-  const [biometricType, setBiometricType] = useState('No biometrics');
+  const { getAuthMode, getSupportedBiometricsTypes } = useVault();
+  const [authMode, setAuthMode] = useState('');
+  const [biometricType, setBiometricType] = useState('');
+
+  const onLoad = async () => {
+    setAuthMode(await getAuthMode());
+    setBiometricType(await getSupportedBiometricsTypes());
+  };
+
+  useEffect(() => {
+    onLoad();
+  }, []);
 
   return (
     <IonPage className="about">
@@ -56,7 +69,7 @@ const About: React.FC = () => {
           <IonListHeader>System</IonListHeader>
           <IonItem>
             <IonLabel>Authentication Mode</IonLabel>
-            <IonNote slot="end"></IonNote>
+            <IonNote slot="end">{authMode}</IonNote>
           </IonItem>
           <IonItem>
             <IonLabel>Biometric Type</IonLabel>
