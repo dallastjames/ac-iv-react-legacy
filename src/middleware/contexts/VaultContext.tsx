@@ -3,6 +3,7 @@ import { initialState } from '../../models/VaultState';
 import { reducer } from '../reducers/VaultReducer';
 import VaultAction from '../actions/VaultActions';
 import VaultSingleton from '../../services/Vault';
+import { getStoredAuthMode } from '../../services/Settings';
 
 export const VaultContext = createContext<{
   state: typeof initialState;
@@ -18,8 +19,11 @@ export const VaultProvider: React.FC = ({ children }) => {
   const vault = VaultSingleton.getInstance();
 
   const initVaultContext = async () => {
-    const mode = await vault.getAuthMode();
-    dispatch({ type: 'SET_AUTH_MODE', mode });
+    const authMode = await getStoredAuthMode();
+    console.log('App::VaultContext::initVaultContext::Stored Mode', authMode);
+    await vault.setAuthMode(authMode);
+    console.log('App::VaultContext::initVaultContext', authMode);
+    dispatch({ type: 'SET_AUTH_MODE', authMode });
   };
 
   useEffect(() => {

@@ -3,20 +3,18 @@ import { PinMode } from './PinMode';
 
 export default interface VaultState {
   authMode: AuthMode;
-  biometricType: BiometricType | undefined;
-  biometricsEnabled: boolean;
-  secureStorageEnabled: boolean;
-  passcodeEnabled: boolean;
   hasSessionStored: boolean;
   pinMode: PinMode;
+  useBiometrics: boolean;
+  usePasscode: boolean;
+  useSecureStorageMode: boolean;
 }
 
 export const initialState: VaultState = {
   authMode: AuthMode.InMemoryOnly,
-  biometricType: undefined,
-  biometricsEnabled: false,
-  secureStorageEnabled: false,
-  passcodeEnabled: false,
   hasSessionStored: false,
-  pinMode: PinMode.Dismiss
+  pinMode: PinMode.Dismiss,
+  useBiometrics: false,
+  usePasscode: false,
+  useSecureStorageMode: false
 };

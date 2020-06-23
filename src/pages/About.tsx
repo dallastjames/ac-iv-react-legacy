@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -13,7 +14,8 @@ import {
   IonItem,
   IonNote
 } from '@ionic/react';
-import React, { useState, useEffect } from 'react';
+import { AuthMode } from '@ionic-enterprise/identity-vault';
+
 import { logOut } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
 import { useVault } from '../hooks/useVault';
@@ -27,7 +29,8 @@ const About: React.FC = () => {
   const [biometricType, setBiometricType] = useState('');
 
   const onLoad = async () => {
-    setAuthMode(await getAuthMode());
+    const authMode = AuthMode[await getAuthMode()];
+    setAuthMode(authMode);
     setBiometricType(await getSupportedBiometricsTypes());
   };
 

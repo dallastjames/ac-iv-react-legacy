@@ -33,20 +33,6 @@ class Vault extends IonicIdentityVaultUser<User> {
     return vault.isLocked();
   }
 
-  async setDesiredAuthMode(useBio: boolean, usePasscode: boolean, useSecureStorageMode: boolean): Promise<void> {
-    const mode =
-      useBio && usePasscode
-        ? AuthMode.BiometricAndPasscode
-        : useBio
-        ? AuthMode.BiometricOnly
-        : usePasscode
-        ? AuthMode.PasscodeOnly
-        : useSecureStorageMode
-        ? AuthMode.SecureStorage
-        : AuthMode.InMemoryOnly;
-    return this.setAuthMode(mode);
-  }
-
   onVaultLocked() {
     console.log('App: Vault::onVaultLocked');
   }

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -12,18 +13,41 @@ import {
   IonItem,
   IonLabel
 } from '@ionic/react';
-import React, { useState } from 'react';
+import { AuthMode } from '@ionic-enterprise/identity-vault';
 import { logOut, lockClosed } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
+import { useVault } from '../hooks/useVault';
 import './Settings.scss';
 
 const Settings: React.FC = () => {
   const { logout } = useAuth();
-  const [useBiometrics, setUseBiometrics] = useState(false);
-  const [usePasscode, setUsePasscode] = useState(false);
-  const [useSecureStorage, setUseSecureStorage] = useState(false);
+  const {
+    vault: { authMode },
+    setAuthMode
+  } = useVault();
+  const [useBiometrics, setUseBiometrics] = useState(
+    authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.BiometricOnly
+  );
+  const [usePasscode, setUsePasscode] = useState(
+    authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.PasscodeOnly
+  );
+  const [useSecureStorageMode, setUseSecureStorageMode] = useState(authMode === AuthMode.SecureStorage);
 
-  const authModeChanged = () => {};
+  const proxy = async (e: boolean) => {};
+
+  const determineAuthMode = (): AuthMode => {
+    const mode =
+      useBiometrics && usePasscode
+        ? AuthMode.BiometricAndPasscode
+        : useBiometrics
+        ? AuthMode.BiometricOnly
+        : usePasscode
+        ? AuthMode.PasscodeOnly
+        : useSecureStorageMode
+        ? AuthMode.SecureStorage
+        : AuthMode.InMemoryOnly;
+    return mode;
+  };
 
   return (
     <IonPage>
@@ -40,16 +64,24 @@ const Settings: React.FC = () => {
       <IonContent>
         <IonList>
           <IonItem>
-            <IonLabel>Biometrics ()</IonLabel>
-            <IonToggle checked={useBiometrics} onIonChange={authModeChanged}></IonToggle>
+            <IonLabel>Biometrics</IonLabel>
+            <IonToggle
+              checked={useBiometrics}
+              onIonChange={(e) => setUseBiometrics(e.detail.checked)}
+              disabled={useSecureStorageMode}
+            ></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Application Passcode</IonLabel>
-            <IonToggle checked={usePasscode} onIonChange={authModeChanged} disabled={useSecureStorage}></IonToggle>
+            <IonToggle
+              checked={usePasscode}
+              onIonChange={(e) => setUsePasscode(e.detail.checked)}
+              disabled={useSecureStorageMode}
+            ></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Secure Storage Mode</IonLabel>
-            <IonToggle checked={useSecureStorage} onIonChange={authModeChanged} disabled={useSecureStorage}></IonToggle>
+            <IonToggle checked={useSecureStorageMode} onIonChange={(e) => proxy(e.detail.checked)}></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Lock</IonLabel>

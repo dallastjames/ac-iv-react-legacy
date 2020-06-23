@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { VaultContext } from '../middleware/contexts/VaultContext';
 import VaultSingleton from '../services/Vault';
 import { AuthMode } from '@ionic-enterprise/identity-vault';
+import { setStoredAuthMode } from '../services/Settings';
 
 export const useVault = () => {
   const { state, dispatch } = useContext(VaultContext);
@@ -11,8 +12,17 @@ export const useVault = () => {
     throw new Error('useVault must be used with a VaultProvider');
   }
 
-  const getAuthMode = async (): Promise<string> => {
-    return AuthMode[await vault.getAuthMode()];
+  const getAuthMode = async (): Promise<AuthMode> => {
+    return await vault.getAuthMode();
+  };
+
+  const setAuthMode = async (authMode: AuthMode): Promise<void> => {
+    try {
+      await setStoredAuthMode(authMode);
+      dispatch({ type: 'SET_AUTH_MODE', authMode });
+    } catch (error) {
+      console.error(`Unable to set the Vault to ${AuthMode[authMode]}.`);
+    }
   };
 
   const getSupportedBiometricsTypes = async (): Promise<string> => {
@@ -38,6 +48,7 @@ export const useVault = () => {
   return {
     vault: state,
     getAuthMode,
+    setAuthMode,
     getSupportedBiometricsTypes
   };
 };
