@@ -21,32 +21,35 @@ import './Settings.scss';
 
 const Settings: React.FC = () => {
   const { logout } = useAuth();
-  const {
-    vault: { authMode },
-    setAuthMode
-  } = useVault();
-  const [useBiometrics, setUseBiometrics] = useState(
-    authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.BiometricOnly
-  );
-  const [usePasscode, setUsePasscode] = useState(
-    authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.PasscodeOnly
-  );
-  const [useSecureStorageMode, setUseSecureStorageMode] = useState(authMode === AuthMode.SecureStorage);
+  const { authMode, setAuthMode } = useVault();
+  const [biometrics, setBiometrics] = useState<boolean>(false);
+  const [passcode, setPasscode] = useState<boolean>(false);
+  const [secureStorge, setSecureStorge] = useState<boolean>(false);
 
-  const proxy = async (e: boolean) => {};
+  useEffect(() => {
+    setBiometrics(authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.BiometricOnly);
+    setPasscode(authMode === AuthMode.BiometricAndPasscode || authMode === AuthMode.PasscodeOnly);
+    setSecureStorge(authMode === AuthMode.SecureStorage);
+  }, [authMode]);
 
-  const determineAuthMode = (): AuthMode => {
-    const mode =
-      useBiometrics && usePasscode
-        ? AuthMode.BiometricAndPasscode
-        : useBiometrics
-        ? AuthMode.BiometricOnly
-        : usePasscode
-        ? AuthMode.PasscodeOnly
-        : useSecureStorageMode
-        ? AuthMode.SecureStorage
-        : AuthMode.InMemoryOnly;
-    return mode;
+  const toggleUseBiometrics = () => {
+    handleAuthModeChange(!biometrics, passcode, secureStorge);
+  };
+
+  const toggleUsePasscode = () => {
+    handleAuthModeChange(biometrics, !passcode, secureStorge);
+  };
+
+  const toggleUseSecureStorage = () => {
+    handleAuthModeChange(biometrics, passcode, !secureStorge);
+  };
+
+  const handleAuthModeChange = (biometrics: boolean, passcode: boolean, secureStorge: boolean) => {
+    if (secureStorge) return setAuthMode(AuthMode.SecureStorage);
+    if (biometrics && passcode) return setAuthMode(AuthMode.BiometricAndPasscode);
+    if (biometrics) return setAuthMode(AuthMode.BiometricOnly);
+    if (passcode) return setAuthMode(AuthMode.PasscodeOnly);
+    return setAuthMode(AuthMode.InMemoryOnly);
   };
 
   return (
@@ -65,23 +68,15 @@ const Settings: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel>Biometrics</IonLabel>
-            <IonToggle
-              checked={useBiometrics}
-              onIonChange={(e) => setUseBiometrics(e.detail.checked)}
-              disabled={useSecureStorageMode}
-            ></IonToggle>
+            <IonToggle checked={biometrics} onClick={toggleUseBiometrics} disabled={secureStorge}></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Application Passcode</IonLabel>
-            <IonToggle
-              checked={usePasscode}
-              onIonChange={(e) => setUsePasscode(e.detail.checked)}
-              disabled={useSecureStorageMode}
-            ></IonToggle>
+            <IonToggle checked={passcode} onClick={toggleUsePasscode} disabled={secureStorge}></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Secure Storage Mode</IonLabel>
-            <IonToggle checked={useSecureStorageMode} onIonChange={(e) => proxy(e.detail.checked)}></IonToggle>
+            <IonToggle checked={secureStorge} onClick={toggleUseSecureStorage}></IonToggle>
           </IonItem>
           <IonItem>
             <IonLabel>Lock</IonLabel>

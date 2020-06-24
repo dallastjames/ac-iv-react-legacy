@@ -15,7 +15,6 @@ import {
   IonNote
 } from '@ionic/react';
 import { AuthMode } from '@ionic-enterprise/identity-vault';
-
 import { logOut } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
 import { useVault } from '../hooks/useVault';
@@ -24,13 +23,10 @@ import './About.scss';
 
 const About: React.FC = () => {
   const { logout, user } = useAuth();
-  const { getAuthMode, getSupportedBiometricsTypes } = useVault();
-  const [authMode, setAuthMode] = useState('');
+  const { authMode, getSupportedBiometricsTypes } = useVault();
   const [biometricType, setBiometricType] = useState('');
 
   const onLoad = async () => {
-    const authMode = AuthMode[await getAuthMode()];
-    setAuthMode(authMode);
     setBiometricType(await getSupportedBiometricsTypes());
   };
 
@@ -72,7 +68,7 @@ const About: React.FC = () => {
           <IonListHeader>System</IonListHeader>
           <IonItem>
             <IonLabel>Authentication Mode</IonLabel>
-            <IonNote slot="end">{authMode}</IonNote>
+            <IonNote slot="end">{AuthMode[authMode]}</IonNote>
           </IonItem>
           <IonItem>
             <IonLabel>Biometric Type</IonLabel>

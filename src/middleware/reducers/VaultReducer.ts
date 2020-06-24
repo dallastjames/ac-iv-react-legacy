@@ -1,6 +1,6 @@
+import { AuthMode } from '@ionic-enterprise/identity-vault';
 import VaultState, { initialState } from '../../models/VaultState';
 import VaultAction from '../actions/VaultActions';
-import { AuthMode } from '@ionic-enterprise/identity-vault';
 
 export const reducer = (state: VaultState = initialState, action: VaultAction) => {
   switch (action.type) {

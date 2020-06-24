@@ -1,13 +1,18 @@
 import { Plugins } from '@capacitor/core';
-import { StorageKeys } from '../models/StorageKeys';
-import { AuthMode } from '@ionic-enterprise/identity-vault';
 const { Storage } = Plugins;
 
-export const getStoredAuthMode = async (): Promise<AuthMode> => {
-  const stored = await Storage.get({ key: StorageKeys.AUTH_MODE });
-  return stored.value ? JSON.parse(stored.value) : AuthMode.InMemoryOnly;
-};
+interface KeyPairValue {
+  key: string;
+  value: any;
+}
 
-export const setStoredAuthMode = async (authMode: AuthMode): Promise<void> => {
-  await Storage.set({ key: StorageKeys.AUTH_MODE, value: authMode.toString() });
-};
+export default class Settings {
+  static async set(setting: KeyPairValue): Promise<void> {
+    await Storage.set({ key: setting.key, value: setting.value.toString() });
+  }
+
+  static async get(key: string, defaultValue: any = undefined): Promise<any> {
+    const setting = await Storage.get({ key });
+    return setting.value ? JSON.parse(setting.value) : defaultValue;
+  }
+}

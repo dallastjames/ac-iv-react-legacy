@@ -2,7 +2,6 @@ import {
   BiometricType,
   IdentityVault,
   PluginConfiguration,
-  AuthMode,
   SupportedBiometricType
 } from '@ionic-enterprise/identity-vault';
 
