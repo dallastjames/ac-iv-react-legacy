@@ -28,9 +28,40 @@ class Vault extends IonicIdentityVaultUser<User> {
     );
   }
 
+  /**
+   * This determines which `IonicNativeAuthPlugin` implementation to use.
+   *
+   * On mobile devices, we will use the device's secure enclave. There is no
+   * available equivalent for web; the consumer must provide their own implementation
+   * for web/PWA. This application provides a sample implementation: `BrowserPlugin`.
+   *
+   * @returns {IonicNativeAuthPlugin} The IonicNativeAuthPlugin implementation.
+   */
+  getPlugin(): IonicNativeAuthPlugin {
+    if (isPlatform('capacitor')) return super.getPlugin();
+    return BrowserPlugin;
+  }
+
+  /**
+   * This returns true if the vault is locked, or false if the Vault is unlocked.
+   *
+   * @returns {Promise<boolean>} The lock status of the Vault.
+   */
   async isLocked(): Promise<boolean> {
     const vault = await this.getVault();
     return vault.isLocked();
+  }
+
+  /**
+   * This will display the custom passcode prompt when:
+   * 1. The user is requested to establish a passcode.
+   * 2. The user is requested to unlock using their passcode.
+   * The method completes once the Vault plugin is finished using the passcode.
+   * @returns {Promise<string>} The passcode entered.
+   */
+  async onPasscodeRequest(isPasscodeSetRequest: boolean): Promise<string> {
+    console.log('App::Vault::onPasscodeRequest');
+    return '111';
   }
 
   onVaultLocked() {
@@ -39,12 +70,6 @@ class Vault extends IonicIdentityVaultUser<User> {
 
   onVaultUnlocked() {
     console.log('App: Vault::onVaultUnlocked');
-  }
-
-  ///TODO: Comment that this determines which plugin to use depending on platform.
-  getPlugin(): IonicNativeAuthPlugin {
-    if (isPlatform('capacitor')) return super.getPlugin();
-    return BrowserPlugin;
   }
 }
 

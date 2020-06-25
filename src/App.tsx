@@ -5,6 +5,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Tabs from './components/Tabs';
 import Login from './pages/Login';
 import { useAuth } from './hooks/useAuth';
+import PasscodeModal from './components/PasscodeModal';
 import MiddlewareProvider from './middleware';
 
 import '@ionic/react/css/core.css';
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
+      <PasscodeModal isOpen={false} />
       <IonReactRouter>
         <IonRouterOutlet>
           <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
