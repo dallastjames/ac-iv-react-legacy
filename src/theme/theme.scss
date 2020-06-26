@@ -1,0 +1,24 @@
+body {
+  background: url('../assets/leaves.svg') no-repeat top right;
+  background-size: 50vh 35vh;
+  background-position: 30vw -20vw;
+}
+
+ion-content {
+  --background: none;
+}
+
+ion-header {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+ion-toolbar {
+  --background: transparent;
+  --ion-color-base: transparent !important;
+}
+
+.passcode-modal .modal-wrapper {
+  background: var(--ion-color-light) url('../assets/leaves.svg') no-repeat top right;
+  background-size: 50vh 35vh;
+  background-position: 30vw -20vw;
+}
