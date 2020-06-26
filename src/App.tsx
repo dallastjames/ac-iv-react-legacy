@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <PasscodeModal isOpen={true} />
+      <PasscodeModal isOpen={true} shouldCreatePasscode={true} />
       <IonReactRouter>
         <IonRouterOutlet>
           <Route path="/" render={() => <Redirect to="/login" />} exact={true} />

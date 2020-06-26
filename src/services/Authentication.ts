@@ -58,13 +58,13 @@ export class Authentication extends IonicAuth<User> {
 }
 
 export default class AuthSingleton {
-  private static instance: IonicAuth | undefined = undefined;
+  private static instance: Authentication | undefined = undefined;
 
-  static setInstance(instance: IonicAuth) {
+  static setInstance(instance: Authentication) {
     this.instance = instance;
   }
 
-  static getInstance(): IonicAuth {
+  static getInstance(): Authentication {
     if (this.instance === undefined) this.instance = new Authentication();
     return this.instance;
   }
