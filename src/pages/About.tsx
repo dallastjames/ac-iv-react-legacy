@@ -36,8 +36,8 @@ const About: React.FC = () => {
 
   return (
     <IonPage className="about">
-      <IonHeader>
-        <IonToolbar color="primary">
+      <IonHeader translucent={true}>
+        <IonToolbar>
           <IonTitle>About</IonTitle>
           <IonButtons slot="primary">
             <IonButton slot="icon-only" onClick={logout}>

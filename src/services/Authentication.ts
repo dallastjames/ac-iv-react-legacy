@@ -25,7 +25,7 @@ const options: IonicAuthOptions = {
   tokenStorageProvider: VaultSingleton.getInstance()
 };
 
-class Authentication extends IonicAuth<User> {
+export class Authentication extends IonicAuth<User> {
   onLoginSuccessCallback: (user: User) => void = () => {};
   onLogoutCallback: () => void = () => {};
 
@@ -58,9 +58,13 @@ class Authentication extends IonicAuth<User> {
 }
 
 export default class AuthSingleton {
-  private static instance: Authentication | undefined = undefined;
+  private static instance: IonicAuth | undefined = undefined;
 
-  static getInstance(): Authentication {
+  static setInstance(instance: IonicAuth) {
+    this.instance = instance;
+  }
+
+  static getInstance(): IonicAuth {
     if (this.instance === undefined) this.instance = new Authentication();
     return this.instance;
   }

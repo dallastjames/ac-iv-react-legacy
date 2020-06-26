@@ -1,0 +1,42 @@
+.passcode-modal {
+  .modal-wrapper {
+    background: var(--ion-color-light) url('../assets/leaves.svg') no-repeat top right;
+    background-size: 60vw 60vw;
+    background-position: 55vw -10vw;
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100vh;
+    width: 100%;
+    padding: 0 2em 10vh;
+  }
+  &-display {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 1rem 1rem;
+    width: 100%;
+    justify-content: space-between;
+    div {
+      border-bottom: 2px solid var(--ion-color-tertiary);
+      flex: 1;
+      margin: 0 0.5rem;
+      text-align: center;
+      font-size: 2rem;
+      min-height: 3rem;
+      color: var(--ion-color-tertiary);
+    }
+  }
+  &-pinpad {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    ion-button {
+      width: 30%;
+      font-size: 2rem;
+      height: 3rem;
+    }
+  }
+}

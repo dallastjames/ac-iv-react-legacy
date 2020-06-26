@@ -54,8 +54,8 @@ const Settings: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar color="primary">
+      <IonHeader translucent={true}>
+        <IonToolbar>
           <IonTitle>Settings</IonTitle>
           <IonButtons slot="primary">
             <IonButton slot="icon-only" onClick={logout}>
