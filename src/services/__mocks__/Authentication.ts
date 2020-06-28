@@ -1,4 +1,4 @@
-import { User } from '../../models/User';
+import User, { mockUser } from '../../models/User';
 
 export class MockAuthentication {
   onLoginSuccessCallback: (user: User) => void = jest.fn();
@@ -13,8 +13,7 @@ export class MockAuthentication {
   }
 
   async onLoginSuccess(): Promise<void> {
-    const user: User = { id: '1234', email: 'john.doe@company.com' };
-    this.onLoginSuccessCallback(user);
+    this.onLoginSuccessCallback(mockUser);
   }
 
   async onLogout(): Promise<void> {
@@ -22,8 +21,7 @@ export class MockAuthentication {
   }
 
   async getCurrentUser(): Promise<User> {
-    const user: User = { id: '1234', email: 'john.doe@company.com' };
-    return user;
+    return mockUser;
   }
 }
 

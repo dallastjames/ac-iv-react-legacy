@@ -1,5 +1,5 @@
 import AuthSingleton, { Authentication } from './Authentication';
-import { User } from '../models/User';
+import User, { mockUser } from '../models/User';
 jest.mock('./Authentication');
 
 describe('Authentication', () => {
@@ -16,8 +16,8 @@ describe('Authentication', () => {
       let user: User;
       auth.onLoginSuccessCallback = (u) => (user = u);
       await auth.onLoginSuccess();
-      expect(user!.id).toBe('1234');
-      expect(user!.email).toBe('john.doe@company.com');
+      expect(user!.id).toBe(mockUser.id);
+      expect(user!.email).toBe(mockUser.email);
     });
   });
 
@@ -31,8 +31,8 @@ describe('Authentication', () => {
   describe('getCurrentUser', () => {
     it('should return the current user information', async () => {
       const { id, email } = await auth.getCurrentUser();
-      expect(id).toBe('1234');
-      expect(email).toBe('john.doe@company.com');
+      expect(id).toBe(mockUser.id);
+      expect(email).toBe(mockUser.email);
     });
   });
 });
