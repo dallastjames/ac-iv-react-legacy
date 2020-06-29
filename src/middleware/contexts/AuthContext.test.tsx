@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { render, waitForElement } from '@testing-library/react';
+import { render, waitForElement, cleanup, getByTestId } from '@testing-library/react';
 import { AuthProvider, AuthContext } from './AuthContext';
 import { mockUser } from '../../models/User';
+import AuthSingleton from '../../services/Authentication';
 jest.mock('../../services/Authentication');
 
 const MockAuthConsumer: React.FC = () => {
@@ -17,26 +18,44 @@ const MockAuthConsumer: React.FC = () => {
   );
 };
 
+const tree = (
+  <AuthProvider>
+    <MockAuthConsumer />
+  </AuthProvider>
+);
+
 describe('<AuthProvider />', () => {
-  let tree: any;
+  afterEach(cleanup);
 
-  beforeEach(() => {
-    tree = (
-      <AuthProvider>
-        <MockAuthConsumer />
-      </AuthProvider>
-    );
-  });
+  describe('on mount', () => {
+    it('should check if the current user is authenticated', async () => {
+      const spy = spyOn(AuthSingleton.getInstance(), 'isAuthenticated').and.returnValue(Promise.resolve(true));
+      const { getByTestId, container } = render(tree);
+      await waitForElement(() => getByTestId('id'), { container });
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
 
-  it('should dispatch LOGIN_SUCCESS on mount', async () => {
-    const { getByTestId, container } = render(tree);
-    const [idElement, firstNameElement, lastNameElement, emailElement] = await waitForElement(
-      () => [getByTestId('id'), getByTestId('firstName'), getByTestId('lastName'), getByTestId('email')],
-      { container }
-    );
-    expect(idElement.textContent).toBe(mockUser.id);
-    expect(firstNameElement.textContent).toBe(mockUser.firstName);
-    expect(lastNameElement.textContent).toBe(mockUser.lastName);
-    expect(emailElement.textContent).toBe(mockUser.email);
+    it("should update state with the current user's info if authenticated", async () => {
+      const { getByTestId, container } = render(tree);
+      const [idElement, firstNameElement, lastNameElement, emailElement] = await waitForElement(
+        () => [getByTestId('id'), getByTestId('firstName'), getByTestId('lastName'), getByTestId('email')],
+        { container }
+      );
+      expect(idElement.textContent).toBe(mockUser.id);
+      expect(firstNameElement.textContent).toBe(mockUser.firstName);
+      expect(lastNameElement.textContent).toBe(mockUser.lastName);
+      expect(emailElement.textContent).toBe(mockUser.email);
+    });
+
+    it('should do nothing if the current user is unauthenticated', async () => {
+      const spy = spyOn(AuthSingleton.getInstance(), 'isAuthenticated').and.returnValue(Promise.resolve(false));
+      const { getByTestId, container } = render(tree);
+      try {
+        await waitForElement(() => getByTestId('id'), { container, timeout: 100 });
+        expect(false).toBeTruthy();
+      } catch (error) {
+        expect(spy).toHaveBeenCalledTimes(1);
+      }
+    });
   });
 });
