@@ -1,6 +1,6 @@
 import { isPlatform } from '@ionic/react';
 import { IonicAuth, IonicAuthOptions } from '@ionic-enterprise/auth';
-import { User } from '../models/User';
+import User from '../models/User';
 import VaultSingleton from './Vault';
 
 const options: IonicAuthOptions = {

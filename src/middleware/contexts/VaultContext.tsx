@@ -22,9 +22,7 @@ export const VaultProvider: React.FC = ({ children }) => {
 
   const initVaultContext = async () => {
     const authMode = await Settings.get(StorageKeys.AUTH_MODE, AuthMode.InMemoryOnly);
-    console.log('App::VaultContext::initVaultContext::Stored Mode', AuthMode[authMode]);
     await vault.setAuthMode(authMode);
-    console.log('App::VaultContext::initVaultContext', authMode);
     dispatch({ type: 'SET_AUTH_MODE', authMode });
   };
 

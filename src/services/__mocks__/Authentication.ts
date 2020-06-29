@@ -12,6 +12,10 @@ export class MockAuthentication {
     return this.onLogout();
   }
 
+  async isAuthenticated(): Promise<boolean> {
+    return true;
+  }
+
   async onLoginSuccess(): Promise<void> {
     this.onLoginSuccessCallback(mockUser);
   }
