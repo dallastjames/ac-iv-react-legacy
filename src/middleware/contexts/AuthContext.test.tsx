@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { render, waitForElement, cleanup, getByTestId } from '@testing-library/react';
+import { render, waitForElement, cleanup } from '@testing-library/react';
 import { AuthProvider, AuthContext } from './AuthContext';
 import { mockUser } from '../../models/User';
 import AuthSingleton from '../../services/Authentication';
