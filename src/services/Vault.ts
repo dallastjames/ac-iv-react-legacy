@@ -5,7 +5,7 @@ import {
   BiometricType,
   VaultConfig
 } from '@ionic-enterprise/identity-vault';
-import { User } from '../models/User';
+import User from '../models/User';
 import { isPlatform } from '@ionic/react';
 import BrowserPlugin from './BrowserPlugin';
 

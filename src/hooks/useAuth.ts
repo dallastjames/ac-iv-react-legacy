@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../middleware/contexts/AuthContext';
 import AuthSingleton from '../services/Authentication';
-import { User } from '../models/User';
+import User from '../models/User';
 
 export const useAuth = () => {
   const { state, dispatch } = useContext(AuthContext);
