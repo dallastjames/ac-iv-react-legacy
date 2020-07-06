@@ -32,10 +32,6 @@ export class MockAuthentication {
 export default class MockAuthSingleton {
   private static instance: MockAuthentication | undefined = undefined;
 
-  static setInstance(instance: MockAuthentication) {
-    this.instance = instance;
-  }
-
   static getInstance(): MockAuthentication {
     if (this.instance === undefined) this.instance = new MockAuthentication();
     return this.instance;

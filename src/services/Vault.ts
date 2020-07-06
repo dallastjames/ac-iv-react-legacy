@@ -5,11 +5,11 @@ import {
   BiometricType,
   VaultConfig
 } from '@ionic-enterprise/identity-vault';
-import User from '../models/User';
 import { isPlatform } from '@ionic/react';
+import User from '../models/User';
 import BrowserPlugin from './BrowserPlugin';
 
-class Vault extends IonicIdentityVaultUser<User> {
+export class Vault extends IonicIdentityVaultUser<User> {
   constructor() {
     super(
       { ready: () => Promise.resolve() },
@@ -34,7 +34,6 @@ class Vault extends IonicIdentityVaultUser<User> {
    * On mobile devices, we will use the device's secure enclave. There is no
    * available equivalent for web; the consumer must provide their own implementation
    * for web/PWA. This application provides a sample implementation: `BrowserPlugin`.
-   *
    * @returns {IonicNativeAuthPlugin} The IonicNativeAuthPlugin implementation.
    */
   getPlugin(): IonicNativeAuthPlugin {
@@ -44,7 +43,6 @@ class Vault extends IonicIdentityVaultUser<User> {
 
   /**
    * This returns true if the vault is locked, or false if the Vault is unlocked.
-   *
    * @returns {Promise<boolean>} The lock status of the Vault.
    */
   async isLocked(): Promise<boolean> {

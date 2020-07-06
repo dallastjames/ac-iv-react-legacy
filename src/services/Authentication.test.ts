@@ -2,6 +2,9 @@ import AuthSingleton, { Authentication } from './Authentication';
 import User, { mockUser } from '../models/User';
 jest.mock('./Authentication');
 
+/**
+ * Due to the nature of this class, it is diffcult to test in any non-fragile manner.
+ */
 describe('Authentication', () => {
   let auth: Authentication;
   beforeAll(() => (auth = AuthSingleton.getInstance()));

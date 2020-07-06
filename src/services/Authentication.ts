@@ -26,27 +26,58 @@ const options: IonicAuthOptions = {
 };
 
 export class Authentication extends IonicAuth<User> {
+  /**
+   * This property should be set before you call `login`.
+   *
+   * This will ensure that you have a callback that can be run after login is successful.
+   */
   onLoginSuccessCallback: (user: User) => void = () => {};
+
+  /**
+   * This property should be set before you call `logout`.
+   *
+   * This will ensure that you have a callback that can be run after logging out.
+   */
   onLogoutCallback: () => void = () => {};
 
   constructor() {
     super(options);
   }
 
+  /**
+   * This is called when login is successful.
+   *
+   * It will take the Id token exchanged from our login, extract user information
+   * from it, pass it into `onLoginSuccessCallback`, and trigger `onLoginSuccessCallback`.
+   */
   async onLoginSuccess(): Promise<void> {
     const user = this.unpackIdToken(await this.getIdToken());
     this.onLoginSuccessCallback(user);
   }
 
+  /**
+   * This is called when logging out.
+   *
+   * It will trigger `onLogoutCallback`.
+   */
   async onLogout(): Promise<void> {
     this.onLogoutCallback();
   }
 
+  /**
+   * This will return the current user's information.
+   * @returns {Promise<User>} The current logged in user.
+   */
   async getCurrentUser(): Promise<User> {
     const idTokenInfo = await this.getIdToken();
     return this.unpackIdToken(idTokenInfo);
   }
 
+  /**
+   * This unpacks an Id token into a `User` object.
+   * @param token The Id token exchanged on successful login.
+   * @returns {User} The current logged in user information.
+   */
   private unpackIdToken(token: any): User {
     return {
       id: token['sub'],
@@ -59,10 +90,6 @@ export class Authentication extends IonicAuth<User> {
 
 export default class AuthSingleton {
   private static instance: Authentication | undefined = undefined;
-
-  static setInstance(instance: Authentication) {
-    this.instance = instance;
-  }
 
   static getInstance(): Authentication {
     if (this.instance === undefined) this.instance = new Authentication();
