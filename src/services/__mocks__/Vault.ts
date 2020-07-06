@@ -1,6 +1,13 @@
+import { AuthMode, SupportedBiometricType } from '@ionic-enterprise/identity-vault';
+
 export class MockVault {
   async isLocked(): Promise<boolean> {
     return false;
+  }
+
+  async setAuthMode(authMode: AuthMode): Promise<void> {}
+  async getAvailableHardware(): Promise<SupportedBiometricType[]> {
+    return ['fingerprint', 'face', 'iris'];
   }
 }
 

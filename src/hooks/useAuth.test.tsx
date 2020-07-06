@@ -10,6 +10,7 @@ const wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>;
 
 describe('useAuth', () => {
   afterEach(cleanup);
+  afterEach(jest.restoreAllMocks);
 
   describe('login', () => {
     it('should set the user on successful login', async () => {
@@ -27,7 +28,7 @@ describe('useAuth', () => {
     it('should set an error on unsuccessful login', async () => {
       const errorMsg = 'Unsuccessful login';
       const { result } = renderHook(() => useAuth(), { wrapper });
-      spyOn(AuthSingleton.getInstance(), 'login').and.throwError(errorMsg);
+      jest.spyOn(AuthSingleton.getInstance(), 'login').mockRejectedValueOnce(new Error(errorMsg));
       await act(() => result.current.login());
       expect(result.current.error.message).toBe(errorMsg);
     });

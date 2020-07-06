@@ -62,5 +62,10 @@
     "pretty-quick": "~2.0.1",
     "react-test-renderer": "~16.13.1"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/?!(@ionic-enterprise/identity-vault)"
+    ]
+  }
 }

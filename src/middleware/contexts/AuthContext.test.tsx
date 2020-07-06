@@ -26,10 +26,11 @@ const tree = (
 
 describe('<AuthProvider />', () => {
   afterEach(cleanup);
+  afterEach(jest.restoreAllMocks);
 
   describe('on mount', () => {
     it('should check if the current user is authenticated', async () => {
-      const spy = spyOn(AuthSingleton.getInstance(), 'isAuthenticated').and.returnValue(Promise.resolve(true));
+      const spy = jest.spyOn(AuthSingleton.getInstance(), 'isAuthenticated').mockResolvedValueOnce(true);
       const { getByTestId, container } = render(tree);
       await waitForElement(() => getByTestId('id'), { container });
       expect(spy).toHaveBeenCalledTimes(1);
@@ -48,7 +49,7 @@ describe('<AuthProvider />', () => {
     });
 
     it('should do nothing if the current user is unauthenticated', async () => {
-      const spy = spyOn(AuthSingleton.getInstance(), 'isAuthenticated').and.returnValue(Promise.resolve(false));
+      const spy = jest.spyOn(AuthSingleton.getInstance(), 'isAuthenticated').mockResolvedValueOnce(false);
       const { getByTestId, container } = render(tree);
       try {
         await waitForElement(() => getByTestId('id'), { container, timeout: 100 });

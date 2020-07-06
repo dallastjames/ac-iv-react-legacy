@@ -1,5 +1,4 @@
 import AuthState, { initialState } from '../../models/AuthState';
-import AuthAction from '../actions/AuthActions';
 import { reducer } from './AuthReducer';
 import { mockUser } from '../../models/User';
 
@@ -24,7 +23,7 @@ describe('AuthReducer', () => {
     });
 
     it('should set the user property', () => {
-      expect(state.user.id).toBe(mockUser.id);
+      expect(state.user!.id).toBe(mockUser.id);
     });
   });
 

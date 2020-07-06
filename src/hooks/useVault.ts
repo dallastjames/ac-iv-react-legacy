@@ -18,8 +18,9 @@ export const useVault = () => {
       await vault.setAuthMode(authMode);
       await Settings.set({ key: StorageKeys.AUTH_MODE, value: authMode });
       dispatch({ type: 'SET_AUTH_MODE', authMode });
-    } catch (error) {
-      console.error(`Unable to set the Vault to ${AuthMode[authMode]}.`);
+    } catch (e) {
+      const error = new Error(`Unable to set the Vault to ${AuthMode[authMode]}.`);
+      dispatch({ type: 'SET_VAULT_ERROR', error });
     }
   };
 
@@ -45,6 +46,7 @@ export const useVault = () => {
 
   return {
     authMode: state.authMode,
+    error: state.error,
     setAuthMode,
     getSupportedBiometricsTypes
   };
