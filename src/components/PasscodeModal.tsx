@@ -10,7 +10,7 @@ type PasscodeModalProps = {
 };
 
 const PasscodeModal: React.FC<PasscodeModalProps> = ({ isOpen, shouldCreatePasscode }) => {
-  const [prompt, setPrompt] = useState('Create a Passcode');
+  const [prompt, setPrompt] = useState(shouldCreatePasscode ? 'Create a Passcode' : 'Unlock with Passcode');
   const [passcode, setPasscode] = useState('');
   const [verifyPasscode, setVerifyPasscode] = useState('');
   const [error, setError] = useState('');
@@ -66,7 +66,7 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ isOpen, shouldCreatePassc
           <IonButton fill="clear" disabled={passcode.length === pinLength} onClick={() => append(0)}>
             0
           </IonButton>
-          <IonButton fill="clear" disabled={passcode.length < pinLength} onClick={submit}>
+          <IonButton fill="clear" disabled={true} onClick={submit} role="submit">
             <IonIcon icon={checkmarkDoneCircle} />
           </IonButton>
         </div>
