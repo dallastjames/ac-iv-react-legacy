@@ -34,6 +34,7 @@ export const useAuth = () => {
     error: state.error,
     loading: state.loading,
     user: state.user,
+    getAccessToken: authentication.getAccessToken,
     login,
     logout
   };
