@@ -6,11 +6,13 @@ export default interface VaultState {
   error: any | undefined;
   hasSessionStored: boolean;
   pinMode: PinMode;
+  showPasscodeDialog: boolean;
 }
 
 export const initialState: VaultState = {
   authMode: AuthMode.InMemoryOnly,
   error: undefined,
   hasSessionStored: false,
-  pinMode: PinMode.Dismiss
+  pinMode: PinMode.Dismiss,
+  showPasscodeDialog: false
 };

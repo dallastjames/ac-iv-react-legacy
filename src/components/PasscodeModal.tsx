@@ -60,13 +60,13 @@ const PasscodeModal: React.FC<PasscodeModalProps> = ({ isOpen, shouldCreatePassc
               {el}
             </IonButton>
           ))}
-          <IonButton fill="clear" onClick={removeLastNumber}>
+          <IonButton fill="clear" onClick={removeLastNumber} disabled={!passcode.length} role="remove">
             <IonIcon icon={backspaceOutline} />
           </IonButton>
           <IonButton fill="clear" disabled={passcode.length === pinLength} onClick={() => append(0)}>
             0
           </IonButton>
-          <IonButton fill="clear" disabled={true} onClick={submit} role="submit">
+          <IonButton fill="clear" disabled={passcode.length < pinLength} onClick={submit} role="submit">
             <IonIcon icon={checkmarkDoneCircle} />
           </IonButton>
         </div>

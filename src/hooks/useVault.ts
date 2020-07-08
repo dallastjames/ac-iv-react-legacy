@@ -47,6 +47,8 @@ export const useVault = () => {
   return {
     authMode: state.authMode,
     error: state.error,
+    hasSessionStored: state.hasSessionStored,
+    showPasscodeDialog: state.showPasscodeDialog,
     setAuthMode,
     getSupportedBiometricsTypes
   };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonPage, IonContent, IonButton, IonGrid, IonHeader, IonToolbar } from '@ionic/react';
+import { IonButton } from '@ionic/react';
 import { useAuth } from '../hooks/useAuth';
 import './Login.scss';
 
