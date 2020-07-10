@@ -29,12 +29,17 @@ export const useAuth = () => {
     await authentication.logout();
   };
 
+  const getAccessToken = async (): Promise<string> => {
+    const accessToken = await authentication.getAccessToken();
+    return accessToken || '';
+  };
+
   return {
     isAuthenticated: state.isAuthenticated,
     error: state.error,
     loading: state.loading,
     user: state.user,
-    getAccessToken: authentication.getAccessToken,
+    getAccessToken,
     login,
     logout
   };

@@ -1,5 +1,7 @@
 import User, { mockUser } from '../../models/User';
 
+export const mockAccessToken: string = 'ac09a8a5-2adb-413e-8bfe-ec1bca11817a';
+
 export class MockAuthentication {
   onLoginSuccessCallback: (user: User) => void = jest.fn();
   onLogoutCallback: () => void = jest.fn();
@@ -26,6 +28,10 @@ export class MockAuthentication {
 
   async getCurrentUser(): Promise<User> {
     return mockUser;
+  }
+
+  async getAccessToken(): Promise<string> {
+    return mockAccessToken;
   }
 }
 

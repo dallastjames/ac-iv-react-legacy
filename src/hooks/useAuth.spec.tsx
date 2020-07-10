@@ -4,6 +4,7 @@ import { useAuth } from './useAuth';
 import { AuthProvider } from '../middleware/contexts/AuthContext';
 import { mockUser } from '../models/User';
 import AuthSingleton from '../services/Authentication';
+import { mockAccessToken } from '../services/__mocks__/Authentication';
 jest.mock('../services/Authentication');
 
 const wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>;
@@ -47,6 +48,25 @@ describe('useAuth', () => {
       await act(() => result.current.login());
       await act(() => result.current.logout());
       expect(result.current.isAuthenticated).toBeFalsy();
+    });
+  });
+
+  describe('getAccessToken', () => {
+    it('should return the access token if available', async () => {
+      const { result } = renderHook(() => useAuth(), { wrapper });
+      await act(async () => {
+        expect(await result.current.getAccessToken()).toBe(mockAccessToken);
+      });
+    });
+
+    it('should return an empty string when an access token is not available', async () => {
+      const { result } = renderHook(() => useAuth(), { wrapper });
+      await act(async () => {
+        jest
+          .spyOn(AuthSingleton.getInstance(), 'getAccessToken')
+          .mockImplementationOnce(() => Promise.resolve(undefined));
+        expect(await result.current.getAccessToken()).toBe('');
+      });
     });
   });
 });

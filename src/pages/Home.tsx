@@ -7,32 +7,71 @@ import {
   IonButtons,
   IonButton,
   IonIcon,
-  IonList
+  IonList,
+  IonLabel,
+  IonItem,
+  IonToast
 } from '@ionic/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { logOut } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
+import TeaCategories from '../services/TeaCategories';
+import SkeletonListItem from '../components/SkeletonListItem';
+import TeaCategory from '../models/TeaCategory';
 
 const Home: React.FC = () => {
-  const { logout, user } = useAuth();
+  const { logout, getAccessToken } = useAuth();
+  const [teaCategories, setTeaCategories] = useState<TeaCategory[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | undefined>(undefined);
+
+  const fetchTeaCategories = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      setTeaCategories(await TeaCategories.getAll(accessToken));
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeaCategories();
+  }, []);
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar color="primary">
+      <IonHeader translucent={true}>
+        <IonToolbar>
           <IonTitle>Home</IonTitle>
           <IonButtons slot="primary">
             <IonButton slot="icon-only" onClick={logout}>
-              <IonIcon icon={logOut} />
+              <IonIcon icon={logOut} color="dark" />
             </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <h2>
-          Hello, {user?.firstName} {user?.lastName}!
-        </h2>
-        <IonList></IonList>
+        <IonList>
+          {loading
+            ? [1, 2, 3, 4, 5].map((_, idx) => <SkeletonListItem key={idx} />)
+            : teaCategories.map((category) => (
+                <IonItem key={category.id}>
+                  <IonLabel className="ion-text-wrap">
+                    <h2>{category.name}</h2>
+                    <p>{category.description}</p>
+                  </IonLabel>
+                </IonItem>
+              ))}
+        </IonList>
+        <IonToast
+          isOpen={!!error}
+          onDidDismiss={() => setError(undefined)}
+          message={error}
+          buttons={[{ text: 'Done' }]}
+          color="danger"
+        />
       </IonContent>
     </IonPage>
   );

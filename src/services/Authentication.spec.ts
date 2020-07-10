@@ -1,5 +1,6 @@
 import AuthSingleton, { Authentication } from './Authentication';
 import User, { mockUser } from '../models/User';
+import { mockAccessToken } from './__mocks__/Authentication';
 jest.mock('./Authentication');
 
 /**
@@ -36,6 +37,12 @@ describe('Authentication', () => {
       const { id, email } = await auth.getCurrentUser();
       expect(id).toBe(mockUser.id);
       expect(email).toBe(mockUser.email);
+    });
+  });
+
+  describe('getAccessToken', () => {
+    it('should return an access token', async () => {
+      expect(await auth.getAccessToken()).toBe(mockAccessToken);
     });
   });
 });
