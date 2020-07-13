@@ -28,7 +28,8 @@ const Home: React.FC = () => {
   const fetchTeaCategories = async () => {
     try {
       const accessToken = await getAccessToken();
-      setTeaCategories(await TeaCategories.getAll(accessToken));
+      const teaCategories = await TeaCategories.getAll(accessToken);
+      setTeaCategories(teaCategories);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -40,31 +41,41 @@ const Home: React.FC = () => {
     fetchTeaCategories();
   }, []);
 
+  const renderLoadingList = () => (
+    <IonList data-testid="loading-list">
+      {[1, 2, 3, 4, 5].map((_, idx) => (
+        <SkeletonListItem key={idx} />
+      ))}
+    </IonList>
+  );
+
+  const renderTeaCategoriesList = () => (
+    <IonList data-testid="tea-categories-list">
+      {teaCategories.map((category) => (
+        <IonItem key={category.id}>
+          <IonLabel className="ion-text-wrap">
+            <h2>{category.name}</h2>
+            <p>{category.description}</p>
+          </IonLabel>
+        </IonItem>
+      ))}
+    </IonList>
+  );
+
   return (
     <IonPage>
       <IonHeader translucent={true}>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
           <IonButtons slot="primary">
-            <IonButton slot="icon-only" onClick={logout}>
+            <IonButton slot="icon-only" onClick={logout} role="logout">
               <IonIcon icon={logOut} color="dark" />
             </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          {loading
-            ? [1, 2, 3, 4, 5].map((_, idx) => <SkeletonListItem key={idx} />)
-            : teaCategories.map((category) => (
-                <IonItem key={category.id}>
-                  <IonLabel className="ion-text-wrap">
-                    <h2>{category.name}</h2>
-                    <p>{category.description}</p>
-                  </IonLabel>
-                </IonItem>
-              ))}
-        </IonList>
+        {loading ? renderLoadingList() : renderTeaCategoriesList()}
         <IonToast
           isOpen={!!error}
           onDidDismiss={() => setError(undefined)}

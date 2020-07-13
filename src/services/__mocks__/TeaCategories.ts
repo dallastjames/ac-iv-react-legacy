@@ -53,6 +53,7 @@ export const mockTeaCategories = [
 
 export default class MockTeaCategories {
   static async getAll(token: string): Promise<TeaCategory[]> {
-    return Promise.resolve(mockTeaCategories);
+    await new Promise((res) => setTimeout(res, 500));
+    return mockTeaCategories;
   }
 }
