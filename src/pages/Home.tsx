@@ -68,8 +68,8 @@ const Home: React.FC = () => {
         <IonToolbar>
           <IonTitle>Home</IonTitle>
           <IonButtons slot="primary">
-            <IonButton slot="icon-only" onClick={logout} role="logout">
-              <IonIcon icon={logOut} color="dark" />
+            <IonButton slot="icon-only" onClick={logout} color="dark" role="logout">
+              <IonIcon icon={logOut} />
             </IonButton>
           </IonButtons>
         </IonToolbar>

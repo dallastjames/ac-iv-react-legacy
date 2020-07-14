@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitForElement, waitForDomChange, cleanup, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElement } from '@testing-library/react';
 import { ionFireEvent as fireEvent } from '@ionic/react-test-utils';
 import Home from './Home';
 import AuthSingleton from '../services/Authentication';

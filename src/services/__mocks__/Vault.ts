@@ -6,6 +6,7 @@ export class MockVault {
   }
 
   async setAuthMode(authMode: AuthMode): Promise<void> {}
+
   async getAvailableHardware(): Promise<SupportedBiometricType[]> {
     return ['fingerprint', 'face', 'iris'];
   }

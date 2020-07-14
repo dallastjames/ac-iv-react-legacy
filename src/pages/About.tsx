@@ -15,23 +15,27 @@ import {
   IonNote
 } from '@ionic/react';
 import { AuthMode } from '@ionic-enterprise/identity-vault';
-import { logOut } from 'ionicons/icons';
+import { logOut, logoReact, logoIonic } from 'ionicons/icons';
 import { useAuth } from '../hooks/useAuth';
 import { useVault } from '../hooks/useVault';
 
+import logoIdentityVault from '../assets/identity-vault.svg';
+import logoAuthConnect from '../assets/auth-connect.svg';
+
 import './About.scss';
+import Squircle from '../components/Squircle';
 
 const About: React.FC = () => {
   const { logout, user } = useAuth();
   const { authMode, getSupportedBiometricsTypes } = useVault();
   const [biometricType, setBiometricType] = useState('');
 
-  const onLoad = async () => {
+  const fetchSupportedBiometricTypes = async () => {
     setBiometricType(await getSupportedBiometricsTypes());
   };
 
   useEffect(() => {
-    onLoad();
+    fetchSupportedBiometricTypes();
   }, []);
 
   return (
@@ -40,7 +44,7 @@ const About: React.FC = () => {
         <IonToolbar>
           <IonTitle>About</IonTitle>
           <IonButtons slot="primary">
-            <IonButton slot="icon-only" onClick={logout}>
+            <IonButton slot="icon-only" onClick={logout} color="dark" role="logout">
               <IonIcon icon={logOut} />
             </IonButton>
           </IonButtons>
@@ -48,8 +52,13 @@ const About: React.FC = () => {
       </IonHeader>
       <IonContent>
         <div className="about-hero">
-          <h1>Ionic Auth Connect w/ Identity Vault</h1>
-          <h2>React Demo Application</h2>
+          <h1>
+            <IonIcon src={logoAuthConnect} />
+            <IonIcon src={logoIdentityVault} />
+            <Squircle icon={logoReact} color="#61dbfb" />
+            <Squircle icon={logoIonic} color="#4164ff" />
+          </h1>
+          <h2>Auth Connect with Identity Vault</h2>
         </div>
         <IonList>
           <IonListHeader>Versions</IonListHeader>
@@ -68,14 +77,18 @@ const About: React.FC = () => {
           <IonListHeader>System</IonListHeader>
           <IonItem>
             <IonLabel>Authentication Mode</IonLabel>
-            <IonNote slot="end">{AuthMode[authMode]}</IonNote>
+            <IonNote slot="end" data-testid="authMode">
+              {AuthMode[authMode]}
+            </IonNote>
           </IonItem>
           <IonItem>
             <IonLabel>Biometric Type</IonLabel>
-            <IonNote slot="end">{biometricType}</IonNote>
+            <IonNote slot="end" data-testid="biometricType">
+              {biometricType}
+            </IonNote>
           </IonItem>
           <IonListHeader>User</IonListHeader>
-          <IonItem>
+          <IonItem data-testid="email">
             <IonLabel>Email</IonLabel>
             <IonNote slot="end">{user && user.email}</IonNote>
           </IonItem>
