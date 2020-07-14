@@ -3,7 +3,7 @@ import {
   IonicIdentityVaultUser,
   IonicNativeAuthPlugin,
   BiometricType,
-  VaultConfig
+  VaultConfig,
 } from '@ionic-enterprise/identity-vault';
 import { isPlatform } from '@ionic/react';
 import User from '../models/User';
@@ -23,8 +23,8 @@ export class Vault extends IonicIdentityVaultUser<User> {
         lockAfter: 5000,
         hideScreenOnBackground: true,
         allowSystemPinFallback: true,
-        shouldClearVaultAfterTooManyFailedAttempts: false
-      }
+        shouldClearVaultAfterTooManyFailedAttempts: false,
+      },
     );
   }
 

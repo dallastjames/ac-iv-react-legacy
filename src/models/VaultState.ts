@@ -14,5 +14,5 @@ export const initialState: VaultState = {
   error: undefined,
   hasSessionStored: false,
   pinMode: PinMode.Dismiss,
-  showPasscodeDialog: false
+  showPasscodeDialog: false,
 };

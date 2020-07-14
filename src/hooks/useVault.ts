@@ -19,7 +19,9 @@ export const useVault = () => {
       await Settings.set({ key: StorageKeys.AUTH_MODE, value: authMode });
       dispatch({ type: 'SET_AUTH_MODE', authMode });
     } catch (e) {
-      const error = new Error(`Unable to set the Vault to ${AuthMode[authMode]}.`);
+      const error = new Error(
+        `Unable to set the Vault to ${AuthMode[authMode]}.`,
+      );
       dispatch({ type: 'SET_VAULT_ERROR', error });
     }
   };
@@ -27,7 +29,10 @@ export const useVault = () => {
   const getSupportedBiometricsTypes = async (): Promise<string> => {
     let result = '';
     const types = await vault.getAvailableHardware();
-    types.forEach((type) => (result += `${result ? ', ' : ''}${translateBiometricType(type)}`));
+    types.forEach(
+      type =>
+        (result += `${result ? ', ' : ''}${translateBiometricType(type)}`),
+    );
     return result;
   };
 
@@ -50,6 +55,6 @@ export const useVault = () => {
     hasSessionStored: state.hasSessionStored,
     showPasscodeDialog: state.showPasscodeDialog,
     setAuthMode,
-    getSupportedBiometricsTypes
+    getSupportedBiometricsTypes,
   };
 };

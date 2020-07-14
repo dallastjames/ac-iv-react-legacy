@@ -22,7 +22,7 @@ const options: IonicAuthOptions = {
   // Red is used to call attention to the functionality, you will most likely want to use another color.
   androidToolbarColor: 'Red',
   // Sets Identity Vault as the storage provider for our Authentication tokens.
-  tokenStorageProvider: VaultSingleton.getInstance()
+  tokenStorageProvider: VaultSingleton.getInstance(),
 };
 
 export class Authentication extends IonicAuth<User> {
@@ -83,7 +83,7 @@ export class Authentication extends IonicAuth<User> {
       id: token['sub'],
       firstName: token['given_name'] || '',
       lastName: token['family_name'] || '',
-      email: token['emails'][0]
+      email: token['emails'][0],
     };
   }
 }

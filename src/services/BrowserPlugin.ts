@@ -1,4 +1,8 @@
-import { IdentityVault, PluginOptions, IonicNativeAuthPlugin } from '@ionic-enterprise/identity-vault';
+import {
+  IdentityVault,
+  PluginOptions,
+  IonicNativeAuthPlugin,
+} from '@ionic-enterprise/identity-vault';
 import BrowserVaultSingleton from './BrowserVault';
 
 class BrowserPlugin implements IonicNativeAuthPlugin {
