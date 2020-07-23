@@ -12,7 +12,13 @@ describe('AuthReducer', () => {
 
   describe('Action: LOGIN_SUCCESS', () => {
     let state: AuthState = initialState;
-    beforeAll(() => (state = reducer(initialState, { type: 'LOGIN_SUCCESS', user: mockUser })));
+    beforeAll(
+      () =>
+        (state = reducer(initialState, {
+          type: 'LOGIN_SUCCESS',
+          user: mockUser,
+        })),
+    );
 
     it('should set the isAuthenticated property to true', () => {
       expect(state.isAuthenticated).toBeTruthy();
@@ -29,7 +35,13 @@ describe('AuthReducer', () => {
 
   describe('Action: LOGIN_FAILURE', () => {
     let state: AuthState = initialState;
-    beforeAll(() => (state = reducer(initialState, { type: 'LOGIN_FAILURE', error: 'ERROR' })));
+    beforeAll(
+      () =>
+        (state = reducer(initialState, {
+          type: 'LOGIN_FAILURE',
+          error: 'ERROR',
+        })),
+    );
 
     it('should set the loading property to false', () => {
       expect(state.loading).toBeFalsy();
@@ -42,7 +54,10 @@ describe('AuthReducer', () => {
 
   describe('Action: LOGOUT', () => {
     it('should reset all properties back to initialState', () => {
-      let state: AuthState = reducer(initialState, { type: 'LOGIN_SUCCESS', user: mockUser });
+      let state: AuthState = reducer(initialState, {
+        type: 'LOGIN_SUCCESS',
+        user: mockUser,
+      });
       state = reducer(state, { type: 'LOGOUT' });
       expect(state).toMatchObject(initialState);
     });

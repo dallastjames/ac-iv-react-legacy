@@ -1,4 +1,7 @@
-import { AuthMode, SupportedBiometricType } from '@ionic-enterprise/identity-vault';
+import {
+  AuthMode,
+  SupportedBiometricType,
+} from '@ionic-enterprise/identity-vault';
 
 export class MockVault {
   async isLocked(): Promise<boolean> {

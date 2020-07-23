@@ -2,7 +2,7 @@ import {
   BiometricType,
   IdentityVault,
   PluginConfiguration,
-  SupportedBiometricType
+  SupportedBiometricType,
 } from '@ionic-enterprise/identity-vault';
 
 // Sets Identity Vault to use localStorage on web.
@@ -13,14 +13,14 @@ const storage: any = window.localStorage;
 const browserVaultConfig: PluginConfiguration = {
   descriptor: {
     username: '',
-    vaultId: ''
+    vaultId: '',
   },
   isSecureStorageModeEnabled: true,
   isBiometricsEnabled: false,
   isPasscodeEnabled: false,
   isPasscodeSetupNeeded: false,
   hideScreenOnBackground: false,
-  lockAfter: 50000
+  lockAfter: 50000,
 };
 
 /// TODO: better comments on this code.

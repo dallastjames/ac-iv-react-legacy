@@ -41,6 +41,6 @@ export const useAuth = () => {
     user: state.user,
     getAccessToken,
     login,
-    logout
+    logout,
   };
 };

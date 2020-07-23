@@ -18,7 +18,7 @@ describe('Authentication', () => {
 
     it('should return user information to onLoginSuccessCallback', async () => {
       let user: User;
-      auth.onLoginSuccessCallback = (u) => (user = u);
+      auth.onLoginSuccessCallback = u => (user = u);
       await auth.onLoginSuccess();
       expect(user!.id).toBe(mockUser.id);
       expect(user!.email).toBe(mockUser.email);

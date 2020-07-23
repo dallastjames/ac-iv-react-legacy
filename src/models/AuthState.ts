@@ -11,5 +11,5 @@ export const initialState: AuthState = {
   isAuthenticated: false,
   error: undefined,
   loading: false,
-  user: undefined
+  user: undefined,
 };

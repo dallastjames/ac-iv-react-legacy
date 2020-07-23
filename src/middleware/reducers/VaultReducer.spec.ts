@@ -6,7 +6,10 @@ describe('VaultReducer', () => {
   describe('Action: SET_AUTH_MODE', () => {
     it('should set authMode property', () => {
       let state: VaultState = initialState;
-      state = reducer(state, { type: 'SET_AUTH_MODE', authMode: AuthMode.BiometricAndPasscode });
+      state = reducer(state, {
+        type: 'SET_AUTH_MODE',
+        authMode: AuthMode.BiometricAndPasscode,
+      });
       expect(state.authMode).toBe(AuthMode.BiometricAndPasscode);
     });
   });
@@ -15,7 +18,10 @@ describe('VaultReducer', () => {
     it('should set the error property', () => {
       const errorMessage = 'IdentityVault Error';
       let state: VaultState = initialState;
-      state = reducer(state, { type: 'SET_VAULT_ERROR', error: new Error(errorMessage) });
+      state = reducer(state, {
+        type: 'SET_VAULT_ERROR',
+        error: new Error(errorMessage),
+      });
       expect(state.error.message).toBe(errorMessage);
     });
   });
